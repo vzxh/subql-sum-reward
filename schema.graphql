@@ -1,0 +1,49 @@
+type StarterEntity @entity {
+  id: ID! #id is a required field
+  field1: Int!
+
+  field2: String #filed2 is an optional field
+  field3: BigInt
+
+  field4: Date
+
+  field5: Boolean
+}
+
+type NoBondRecordAccount @entity {
+  id: ID! # account id
+  firstRewardAt: Int!
+}
+
+type SumReward @entity {
+  # account id
+  id: ID!
+
+  accountReward: BigInt!
+
+  accountSlash: BigInt!
+
+  accountTotal: BigInt!
+
+  rewards: [StakingReward] @derivedFrom(field: "account")
+
+  slashs: [StakingSlash] @derivedFrom(field: "account")
+}
+
+type StakingReward @entity {
+  id: ID! # blockHeight-eventIdx
+  account: SumReward!
+
+  balance: BigInt!
+
+  date: Date!
+}
+
+type StakingSlash @entity {
+  id: ID! # blockHeight-eventIdx
+  account: SumReward!
+
+  balance: BigInt!
+
+  date: Date!
+}
